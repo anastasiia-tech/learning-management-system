@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
 import { Link, useLocation } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import { AppContext } from "../../context/AppContext";
 
 const Navbar = () => {
+  const { navigate } = useContext(AppContext);
+
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
@@ -19,6 +22,7 @@ const Navbar = () => {
         }`}
       >
         <img
+          onClick={() => navigate("/")}
           src={assets.logo}
           alt="Logo"
           className="w-28 lg:w-32 cursor-pointer"
