@@ -1,0 +1,17 @@
+export const strings = {
+  noField: (fieldName) => `Поле "${fieldName}" є обов'язковим.`,
+  emailShort: "Ел. пошта",
+  password: "Пароль",
+  passwordConfirmation: "Підтвердження паролю",
+  name: "Ім'я",
+  incorrectEmail: "Невірна адреса електронної пошти",
+  min8: "Мінімальна кількість символів паролю - 8",
+  confirmationError: "Паролі не співпадають",
+  registerError: "Помилка при реєстрації користувача",
+  emailInUse: "Електронна адреса вже використовується",
+  invalidToken: "Не вірний токен",
+  malformedAuth: "Недійсний формат токена автентифікації",
+  unauthenticated: "Помилка автентифікації",
+  invalidCredentials: "Невірний email або пароль",
+  loginError: "Не вдалося виконати вхід. Спробуйте пізніше",
+};
