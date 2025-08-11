@@ -3,7 +3,11 @@ import { X, Eye } from "lucide-react";
 import axios from "axios";
 import { strings } from "../../strings";
 
-export default function LoginModal({ onClose, onSwitchToRegister }) {
+export default function LoginModal({
+  onClose,
+  onSwitchToRegister,
+  onLoginSuccess,
+}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
@@ -37,17 +41,16 @@ export default function LoginModal({ onClose, onSwitchToRegister }) {
 
     try {
       const res = await axios.post("/api/v1/auth/login", form);
-      setSuccess("Вхід успішний!");
-      console.log("Успішний логін:", res.data);
 
-      // Очищення полів після успішного входу
+      if (onLoginSuccess) {
+        onLoginSuccess(res.data.user.name);
+      }
+
+      setSuccess("Вхід успішний!");
       setForm({ email: "", password: "" });
 
-      // localStorage.setItem('token', res.data.token);
       // onClose();
     } catch (err) {
-      console.error(err);
-
       const errData = err.response?.data?.error;
 
       if (errData) {
