@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { X, Eye } from "lucide-react";
 import axios from "axios";
-import { strings } from "../../strings"; // Шлях підлаштуй під структуру свого проекту
+import { strings } from "../../strings";
 
-export default function RegisterModal({ onClose, onSwitchToLogin }) {
+export default function RegisterModal({
+  onClose,
+  onSwitchToLogin,
+  onRegisterSuccess,
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -34,6 +38,7 @@ export default function RegisterModal({ onClose, onSwitchToLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setFieldErrors({
       name: null,
       email: null,
@@ -45,10 +50,12 @@ export default function RegisterModal({ onClose, onSwitchToLogin }) {
 
     try {
       const res = await axios.post("/api/v1/auth/register", form);
-      setSuccess("Реєстрація пройшла успішно!");
-      console.log("Реєстрація успішна:", res.data);
 
-      // Очищення полів форми після успішної реєстрації
+      if (onRegisterSuccess) {
+        onRegisterSuccess(res.data.user.name);
+      }
+
+      setSuccess("Реєстрація пройшла успішно!");
       setForm({
         name: "",
         email: "",
@@ -56,7 +63,6 @@ export default function RegisterModal({ onClose, onSwitchToLogin }) {
         passwordConfirmation: "",
       });
 
-      // Якщо треба, можна тут автоматично закрити модал або переключити на логін
       // onClose();
       // onSwitchToLogin();
     } catch (err) {
@@ -215,7 +221,7 @@ export default function RegisterModal({ onClose, onSwitchToLogin }) {
             type="submit"
             className="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition"
           >
-            Вхід
+            Зареєструватись
           </button>
 
           {generalError && (
